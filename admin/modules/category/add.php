@@ -1,144 +1,36 @@
 <?php
-  
-    require_once __DIR__. "/../../autoload/autoload.php" ;
-    if ($_SERVER["REQUEST_METHOD"] == "post"){
-      $data =
-      [
-        "name" =>postInput('name')
-      ];
+   $open = "category";
+   require_once __DIR__. "/../../autoload/autoload.php" ;
+        $error = array();
+        $data = array();
+        if (!empty($_POST['add_action']))
+        {
+            // Lấy dữ liệu
+            $data['name'] = isset($_POST['name']) ? $_POST['name'] : '';
+          
+            if (empty($data['name'])){
+                $error['name'] = '* mời bạn điền đầy đủ tên danh mục';
+            }
+              
+            // Lưu dữ liệu
+            if (!$error)
+            {
+                echo 'thêm mới thành công';
+                $id_insert = $db->insert("category",$data);
+                if($id_insert > 0)
+                {
+                    $_SESSION['success']= "thêm mới thành công ";
+                    redirectAdmin("category");
+                }
+                else
+                {
+                     $_SESSION['error']= "thêm mới thất bại ";
+                }
+            }
 
-      $erorr = [];
-
-      if( postInput('name') == '')
-      {
-        $erorr['name'] = " mời bạn điền đầy đủ tên danh mục ";
-      }
-
-    }
+        }
 ?>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
-
-  <title>Admin</title>
-
-  <!-- Custom fonts for this template-->
-  <link href="/didong/public/admin/css/all.min.css" rel="stylesheet" type="text/css">
-
-  <!-- Page level plugin CSS-->
-  <link href="/didong/public/admin/css/dataTables.bootstrap4.css" rel="stylesheet">
-
-  <!-- Custom styles for this template-->
-  <link href="/didong/public/admin/css/sb-admin.css" rel="stylesheet">
-  <link href="/didong/public/admin/css/style.css" rel="stylesheet">
-</head>
-
-<body id="page-top">
-
-  <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
-
-    <a class="navbar-brand mr-1" href="index.html">xin chào admin</a>
-
-    <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
-      <i class="fas fa-bars"></i>
-    </button>
-
-    <!-- Navbar Search -->
-    <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
-      <div class="input-group">
-        <input type="text" class="form-control" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-        <div class="input-group-append">
-          <button class="btn btn-primary" type="button">
-            <i class="fas fa-search"></i>
-          </button>
-        </div>
-      </div>
-    </form>
-
-    <!-- Navbar -->
-    <ul class="navbar-nav ml-auto ml-md-0">
-      <li class="nav-item dropdown no-arrow mx-1">
-        <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fas fa-bell fa-fw"></i>
-          <span class="badge badge-danger">9+</span>
-        </a>
-        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="alertsDropdown">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Something else here</a>
-        </div>
-      </li>
-      <li class="nav-item dropdown no-arrow mx-1">
-        <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fas fa-envelope fa-fw"></i>
-          <span class="badge badge-danger">7</span>
-        </a>
-        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="messagesDropdown">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Something else here</a>
-        </div>
-      </li>
-      <li class="nav-item dropdown no-arrow">
-        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fas fa-user-circle fa-fw"></i>
-        </a>
-        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-          <a class="dropdown-item" href="#">Settings</a>
-          <a class="dropdown-item" href="#">Activity Log</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
-        </div>
-      </li>
-    </ul>
-
-  </nav>
-
-  <div id="wrapper">
-    <!-- Sidebar -->
-    <ul class="sidebar navbar-nav">
-      <li class="nav-item active">
-        <a class="nav-link" href="index.html">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Dashboard</span>
-        </a>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fas fa-fw fa-folder"></i>
-          <span>Pages</span>
-        </a>
-        <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-          <h6 class="dropdown-header">Login Screens:</h6>
-          <a class="dropdown-item" href="login.html">Login</a>
-          <a class="dropdown-item" href="register.html">Register</a>
-          <a class="dropdown-item" href="forgot-password.html">Forgot Password</a>
-          <div class="dropdown-divider"></div>
-          <h6 class="dropdown-header">Other Pages:</h6>
-          <a class="dropdown-item" href="404.html">404 Page</a>
-          <a class="dropdown-item" href="blank.html">Blank Page</a>
-        </div>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="charts.html">
-          <i class="fas fa-fw fa-chart-area"></i>
-          <span>Charts</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="tables.html">
-          <i class="fas fa-fw fa-table"></i>
-          <span>Tables</span></a>
-      </li>
-    </ul>
+ <?php require_once __DIR__. "/../../layouts/header.php" ; ?>
     <div id="content-wrapper">
       <h1>
        THÊM MỚI DANH MỤC 
@@ -147,25 +39,27 @@
           <!-- Breadcrumbs-->
           <ol class="breadcrumb">
             <li class="breadcrumb-item">
-              <a href="#">Danh mục</a>
+              <a href="http://localhost/didong/admin/">Trang chủ admin</a>
             </li>
-            <li class="breadcrumb-item active">Overview</li>
+            <li class="breadcrumb-item">
+              <a href="http://localhost/didong/admin/modules/category/">Danh mục</a>
+            </li>
+            <li class="breadcrumb-item active">thêm mới danh mục</li>
           </ol>
         </div>
         <div class="forms-add">
-           <form class="form-horizontal" role="form">
+           <form class="form-horizontal" role="form" method="post" action="add.php">
             <div class="form-group">
               <label for="inputEmail3" class="col-sm-2 control-label">tên danh mục</label>
               <div class="col-sm-8">
-                <input type="text" class="form-control" id="inputEmail3" placeholder="">
-                <?php if (isset($erorr['name'])): ?>
-                  <p class="text-danger"> <?php echo $erorr['name'] ?></p>
-                <?php endif ?>
+                <input type="text"  name="name" class="form-control" id="inputEmail3" placeholder="tên thư mục" value="<?php echo isset($data['name']) ? $data['name'] : ''; ?>"/>
+                <p class="text-danger"><?php echo isset($error['name']) ? $error['name'] : ''; ?></p>
+              
               </div>
             </div>
             <div class="form-group">
               <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-success">lưu</button>
+                <button type="submit" name="add_action" value="Gửi liên hệ" class="btn btn-success">lưu</button>
               </div>
             </div>
           </form>
@@ -173,25 +67,5 @@
 
       
 </div>
-  <!-- Bootstrap core JavaScript-->
-  <script src="/didong/public/admin/js/jquery.min.js"></script>
-  <script src="/didong/public/admin/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Core plugin JavaScript-->
-  <script src="/didong/public/admin/js/jquery.easing.min.js"></script>
-
-  <!-- Page level plugin JavaScript-->
-  <script src="/didong/public/admin/js/Chart.min.js"></script>
-  <script src="/didong/public/admin/js/jquery.dataTables.js"></script>
-  <script src="/didong/public/admin/js/dataTables.bootstrap4.js"></script>
-
-  <!-- Custom scripts for all pages-->
-  <script src="/didong/public/admin/js/sb-admin.min.js"></script>
-
-  <!-- Demo scripts for this page-->
-  <script src="/didong/public/admin/js/datatables-demo.js"></script>
-  <script src="/didong/public/admin/js/chart-area-demo.js"></script>
-
-</body>
-
-</html>
+ <?php require_once __DIR__. "/../../layouts/footer.php" ; ?>
+ 
