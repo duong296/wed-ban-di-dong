@@ -2,6 +2,10 @@
 	/**
 	* get input
 	*/
+    function getInput($string)
+    {
+        return isset($_GET[$string]) ? $_GET[$string] : '';
+    }
 
 	/**
 	* post input
@@ -37,3 +41,4 @@
             }
         }
 ?>
+

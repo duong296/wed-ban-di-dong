@@ -16,6 +16,18 @@
             <li class="breadcrumb-item active"> danh sách danh mục </li>
           </ol>
         </div>
+        <div class="clearfix"></div>
+        <?php if(isset($_SESSION['success'])) :?>
+          <div class="alert alert-success">
+           <?php echo $_SESSION['success']; unset($_SESSION['success']) ?>
+          </div>
+        <?php endif ; ?>
+
+        <?php if(isset($_SESSION['error'])) :?>
+          <div class="alert alert-danger">
+           <?php echo $_SESSION['error']; unset($_SESSION['error']) ?>
+          </div>
+        <?php endif ; ?>
           <div class="table-category">
             <table style="width:100%">
               <tr>
@@ -30,8 +42,8 @@
                 <td><?php echo $item['name']?></td>
                 <td><?php echo $item['created_at']?></td>
                 <td>
-                  <a href="edit.php">sửa</a>
-                  <a href="delate.php">xóa</a>
+                  <a href="edit.php?id<?php echo $item['id'] ?>">sửa</a>
+                  <a href="delete.php?id<?php echo $item['id'] ?>">xóa</a>
                 </td>
               </tr>
               <?php $stt++; endforeach ?>

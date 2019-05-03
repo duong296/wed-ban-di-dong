@@ -1,8 +1,9 @@
 <?php
 
     require_once __DIR__. "/autoload/autoload.php" ;
-    $db = new database ;
+   
     $category = $db -> fetchAll("category") ;
+ 
 ?>
    <?php require_once __DIR__. "/layouts/header.php" ; ?>
 

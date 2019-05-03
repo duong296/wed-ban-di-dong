@@ -94,6 +94,12 @@
           <span>Danh Mục</span>
         </a>
       </li>
+            <li class="nav-item active" class=" <?php echo isset($open) && $open == 'product' ? 'active' : '' ?>">
+        <a class="nav-link" href="<?php echo modules("product") ?>">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>SẢN PHẨN</span>
+        </a>
+      </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fas fa-fw fa-folder"></i>
@@ -110,14 +116,6 @@
           <a class="dropdown-item" href="blank.html">Blank Page</a>
         </div>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="charts.html">
-          <i class="fas fa-fw fa-chart-area"></i>
-          <span>Charts</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="tables.html">
-          <i class="fas fa-fw fa-table"></i>
-          <span>Tables</span></a>
-      </li>
+     
+     
     </ul>

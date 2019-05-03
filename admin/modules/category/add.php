@@ -15,6 +15,16 @@
             // Lưu dữ liệu
             if (!$error)
             {
+
+              $isset = $db->fetchOne("category","name = '".$data['name']."'");
+              if (count($isset) > 0)
+                {
+                   $_SESSION['error']= "tên danh mục dã tồn tại ";
+                   redirectAdmin("category");
+                }
+
+                else
+                {
                 echo 'thêm mới thành công';
                 $id_insert = $db->insert("category",$data);
                 if($id_insert > 0)
@@ -22,10 +32,8 @@
                     $_SESSION['success']= "thêm mới thành công ";
                     redirectAdmin("category");
                 }
-                else
-                {
-                     $_SESSION['error']= "thêm mới thất bại ";
-                }
+              }
+              
             }
 
         }
