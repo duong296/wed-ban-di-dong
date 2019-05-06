@@ -94,12 +94,21 @@
           <span>Danh Mục</span>
         </a>
       </li>
-            <li class="nav-item active" class=" <?php echo isset($open) && $open == 'product' ? 'active' : '' ?>">
+
+      <li class="nav-item active" class=" <?php echo isset($open) && $open == 'product' ? 'active' : '' ?>">
         <a class="nav-link" href="<?php echo modules("product") ?>">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>SẢN PHẨN</span>
         </a>
       </li>
+
+      <li class="nav-item active" class=" <?php echo isset($open) && $open == 'admin' ? 'active' : '' ?>">
+        <a class="nav-link" href="<?php echo modules("admin") ?>">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>ADMIN</span>
+        </a>
+      </li>
+
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fas fa-fw fa-folder"></i>

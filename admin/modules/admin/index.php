@@ -1,6 +1,8 @@
 <?php
+	
     require_once __DIR__. "/../../autoload/autoload.php" ;
-    $product = $db->fetchAll("product");
+
+    $product = $db->fetchAll("admin");
 ?>
 <?php require_once __DIR__. "/../../layouts/header.php" ; ?>
 
@@ -12,7 +14,7 @@
             <li class="breadcrumb-item">
               <a href="http://localhost/didong/admin">trang chủ admin</a>
             </li>
-            <li class="breadcrumb-item active"> danh sách sản phẩn </li>
+            <li class="breadcrumb-item active"> danh sách admin </li>
           </ol>
         </div>
         <div class="clearfix"></div>
@@ -32,10 +34,10 @@
               <tr>
                 <th>STT</th>
                 <th>name</th>
-                <th>hình ảnh</th>
-                <th>thông tin</th>
-                <th>created</th>
-                <th>tình trạng</th>
+                <th>email</th>
+                <th>địa chỉ</th>
+                <th>số điện thoại</th>
+                <th>level</th> 
                 <th>action</th>
               </tr>
               <?php 
@@ -46,31 +48,17 @@
 
                 <td><?php echo $item['name']?></td>
 
-                <td>
-                    <img src="http://localhost/didong/public/uploads/product/product<?php echo $item['thumbnair']?>" width="80px" height="80px">
-                </td>
+                <td><?php echo $item['email']?></td>
+
+                <td><?php echo $item['address']?></td>
+
+                <td><?php echo $item['phone']?></td>
+
+                <td><?php echo $item['level']?></td>
 
                 <td>
-                  <ul>
-                    <li>
-                        giá :<?php echo $item['price']?>
-                    </li>
-                    <li>
-                        số lượng: <?php echo $item['number']?>
-                    </li>
-                     <li>
-                        category_id: <?php echo $item['category_id']?>
-                    </li>
-                  </ul>
-                </td>
-
-                <td><?php echo $item['created_at']?></td>
-
-                <td><?php echo $item['content']?></td>
-
-                <td>
-                  <a href="edit.php?id=<?php echo $item['id'] ?>">sửa</a>
-                  <a href="delete.php?id=<?php echo $item['id'] ?>">xóa</a>
+                  <a href="edit.php?id<?php echo $item['id'] ?>">sửa</a>
+                  <a href="delete.php?id<?php echo $item['id'] ?>">xóa</a>
                 </td>
               </tr>
               <?php 
@@ -90,4 +78,4 @@
           <a href="#">&raquo;</a>
         </div>  
 </div>
- <?php require_once __DIR__. "/../../layouts/footer.php" ; ?> 
+ <?php require_once __DIR__. "/../../layouts/footer.php" ; ?>

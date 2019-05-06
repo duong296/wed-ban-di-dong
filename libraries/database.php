@@ -58,9 +58,9 @@
 
             foreach($data as $field => $value) {
                 if(is_string($value)) {
-                    $set .= $field .'='.'\''. mysqli_real_escape_string($this->link, xss_clean($value)) .'\',';
+                    $set .= $field .'='.'\''. mysqli_real_escape_string($this->link, trim($value)) .'\',';
                 } else {
-                    $set .= $field .'='. mysqli_real_escape_string($this->link, xss_clean($value)) . ',';
+                    $set .= $field .'='. mysqli_real_escape_string($this->link, trim($value)) . ',';
                 }
             }
 
@@ -69,9 +69,9 @@
 
             foreach($conditions as $field => $value) {
                 if(is_string($value)) {
-                    $where .= $field .'='.'\''. mysqli_real_escape_string($this->link, xss_clean($value)) .'\' AND ';
+                    $where .= $field .'='.'\''. mysqli_real_escape_string($this->link, trim($value)) .'\' AND ';
                 } else {
-                    $where .= $field .'='. mysqli_real_escape_string($this->link, xss_clean($value)) . ' AND ';
+                    $where .= $field .'='. mysqli_real_escape_string($this->link, trim($value)) . ' AND ';
                 }
             }
 

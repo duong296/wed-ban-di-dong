@@ -12,7 +12,7 @@
             $data['category_id'] = isset($_POST['category_id']) ? $_POST['category_id'] : '';
             $data['price'] = isset($_POST['price']) ? $_POST['price'] : '';
             $data['sele'] = isset($_POST['sele']) ? $_POST['sele'] : '';
-            $data['name'] = isset($_POST['number']) ? $_POST['number'] : '';
+            $data['number'] = isset($_POST['number']) ? $_POST['number'] : '';
             $data['content'] = isset($_POST['content']) ? $_POST['content'] : '';
             //bắt lỗi
             if (empty($data['name'])){

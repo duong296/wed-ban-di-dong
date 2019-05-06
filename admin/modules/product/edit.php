@@ -1,49 +1,54 @@
 <?php
-   $open = "category";
-   
+ $open = "category";
    require_once __DIR__. "/../../autoload/autoload.php" ;
-   $category = $db->fetchAll("category");
         $error = array();
         $data = array();
-        if (!empty($_POST['add_action']))
+        $id = intval(getInput('id'));
+
+         
+        if (isset($_POST['edit_action']))
         {
             // Lấy dữ liệu
             $data['name'] = isset($_POST['name']) ? $_POST['name'] : '';
-          
-            if (empty($data['name'])){
-                $error['name'] = '* mời bạn điền đầy đủ sản phẩm';
-            }
-              
-            // Lưu dữ liệu
+            $data['category_id'] = isset($_POST['category_id']) ? $_POST['category_id'] : '';
+            $data['price'] = isset($_POST['price']) ? $_POST['price'] : '';
+            $data['sele'] = isset($_POST['sele']) ? $_POST['sele'] : '';
+            $data['number'] = isset($_POST['number']) ? $_POST['number'] : '';
+            $data['content'] = isset($_POST['content']) ? $_POST['content'] : '';
+            $data['number'] = isset($_POST['number']) ? $_POST['number'] : '';
+            //bắt lỗi
             if (!$error)
             {
+              
+             
 
-              $isset = $db->fetchOne("category","name = '".$data['name']."'");
-              if (count($isset) > 0)
+                $id_update = $db->update("product",$data,array("id"=>$id));
+                if($id_update > 0)
                 {
-                   $_SESSION['error']= "tên danh mục dã tồn tại ";
-                   redirectAdmin("category");
+                    $_SESSION['success']= "cập nhật thành công ";
+                    redirectAdmin("product");
                 }
-
                 else
                 {
-                echo 'thêm mới thành công';
-                $id_insert = $db->insert("category",$data);
-                if($id_insert > 0)
-                {
-                    $_SESSION['success']= "thêm mới thành công ";
-                    redirectAdmin("category");
+                     $_SESSION['error']= "cập nhật thất bại";
+                     redirectAdmin("product");
                 }
-              }
-              
             }
+          
 
+        }else{
+            $EditCategory = $db->fetchID("product",$id);
+           
+           if (empty($EditCategory)) {
+                $_SESSION['error']= "loi ";
+                redirectAdmin("product");
+           }
         }
 ?>
  <?php require_once __DIR__. "/../../layouts/header.php" ; ?>
     <div id="content-wrapper">
       <h1>
-       THÊM MỚI   SẢN PHẨM
+       CHỈNH SỬA SẢN PHẨM
       </h1>
         <div class="container-fluid">
           <!-- Breadcrumbs-->
@@ -54,38 +59,25 @@
             <li class="breadcrumb-item">
               <a href="http://localhost/didong/admin/modules/product/">sản phẩm</a>
             </li>
-            <li class="breadcrumb-item active">thêm mới sản phẩm</li>
+            <li class="breadcrumb-item active"> chỉnh sửa sản phẩm</li>
           </ol>
         </div>
         <div class="forms-add">
-           <form class="form-horizontal" role="form" method="post" action="add.php">
-
-             <div class="form-group">
-              <label for="inputEmail3" class="col-sm-2 control-label">danh mục sản phẩm</label>
-              <div class="col-sm-8">
-              <select class="form-control col-md-8" name="category_id">
-              <option value="">- mời bạn chọn danh mục sản phẩm -</option>  
-              <?php foreach ($category as $item):?>
-                <option value="<?php echo $item['id'] ?>"><?php echo $item['name']?></option>
-              <?php endforeach ?>
-              </select>
-                <p class="text-danger"><?php echo isset($error['name']) ? $error['name'] : ''; ?></p>
-              </div>
-            </div>
+           <form class="form-horizontal" role="form" method="post" action="">
 
             <div class="form-group">
               <label for="inputEmail3" class="col-sm-2 control-label">tên sản phẩm</label>
               <div class="col-sm-8">
-                <input type="text"  name="name" class="form-control" id="inputEmail3" placeholder="tên sản phẩm" value="<?php echo isset($data['name']) ? $data['name'] : ''; ?>"/>
-                <p class="text-danger"><?php echo isset($error['name']) ? $error['name'] : ''; ?></p>
+                <input type="text"  name="name" class="form-control" id="inputEmail3"  value="<?php echo $EditCategory['name'] ?>"/>
+               
               </div>
             </div>
 
             <div class="form-group">
               <label for="inputEmail3" class="col-sm-2 control-label"> giá sản phẩm</label>
               <div class="col-sm-8">
-                <input type="number"  name="price" class="form-control" id="inputEmail3" placeholder="9.999.999" value="<?php echo isset($data['price']) ? $data['price'] : ''; ?>"/>
-                <p class="text-danger"><?php echo isset($error['price']) ? $error['price'] : ''; ?></p>
+                <input type="number"  name="price" class="form-control" id="inputEmail3" placeholder="9.999.999" value="<?php echo $EditCategory['price'] ?>"/>
+               
               
               </div>
             </div>
@@ -93,29 +85,29 @@
              <div class="form-group">
               <label for="inputEmail3" class="col-sm-2 control-label"> giảm giá</label>
               <div class="col-sm-3">
-                <input type="number"  name="sele" class="form-control" id="inputEmail3" placeholder="10%" value="0"/>
+                <input type="number"  name="sele" class="form-control" id="inputEmail3" placeholder="10%" value="<?php echo $EditCategory['sele'] ?>"/>
               </div>
             </div>
 
-             <div class="form-group">
-              <label for="inputEmail3" class="col-sm-2 control-label"> hình ảnh</label>
+               <div class="form-group">
+              <label for="inputEmail3" class="col-sm-2 control-label"> số lượng</label>
               <div class="col-sm-3">
-                <input type="file"  name="sele" class="form-control" id="inputEmail3" name="thumbnair" />
-                  <p class="text-danger"><?php echo isset($error['thumbnair']) ? $error['thumbnair'] : ''; ?></p>
+                <input type="number" class="form-control" id="inputEmail3" name="number"  value="<?php echo $EditCategory['number'] ?>"/>
+                  
               </div>
             </div>
 
              <div class="form-group">
               <label for="inputEmail3" class="col-sm-2 control-label">nội dung</label>
               <div class="col-sm-8">
-                <textarea type="text"  name="content" class="form-control" id="inputEmail3"></textarea>
-                <p class="text-danger"><?php echo isset($error['content']) ? $error['content'] : ''; ?></p>
+                <textarea type="text"  name="content" class="form-control" id="inputEmail3" value="<?php echo $EditCategory['content'] ?>" ></textarea>
+                
               </div>
             </div>
 
             <div class="form-group">
               <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" name="add_action" value="Gửi liên hệ" class="btn btn-success">lưu</button>
+                <button type="submit" name="edit_action" class="btn btn-success">lưu</button>
               </div>
             </div>
           </form>

@@ -1,29 +1,28 @@
-edit<?php
+<?php
    $open = "category";
    require_once __DIR__. "/../../autoload/autoload.php" ;
         $error = array();
         $data = array();
         $id = intval(getInput('id'));
 
-         $EditCategory = $db->fetchID("category",$id,);
          
-         if ( !empty($EditCategory)) {
-              $_SESSION['error']= "loi ";
-              redirectAdmin("category");
-         }
-        if (empty($_POST['add_action']))
+        if (isset($_POST['edit_action']))
         {
             // Lấy dữ liệu
             $data['name'] = isset($_POST['name']) ? $_POST['name'] : '';
           
-            if (empty($data['name'])){
-                $error['name'] = '* mời bạn điền đầy đủ tên danh mục';
-            }
-              
             // Lưu dữ liệu
             if (!$error)
             {
-                
+              
+               $isset = $db->fetchOne("category","name = '".$data['name']."'");
+              if (count($isset) > 0)
+                {
+                   $_SESSION['error']= "tên danh mục dã tồn tại ";
+                   redirectAdmin("category");
+                }
+              else{
+
                 $id_update = $db->update("category",$data,array("id"=>$id));
                 if($id_update > 0)
                 {
@@ -36,7 +35,15 @@ edit<?php
                      redirectAdmin("category");
                 }
             }
+          }
 
+        }else{
+            $EditCategory = $db->fetchID("category",$id);
+           
+           if (empty($EditCategory)) {
+                $_SESSION['error']= "loi ";
+                redirectAdmin("category");
+           }
         }
 ?>
  <?php require_once __DIR__. "/../../layouts/header.php" ; ?>
@@ -57,7 +64,7 @@ edit<?php
           </ol>
         </div>
         <div class="forms-add">
-           <form class="form-horizontal" role="form" method="post" action="edit.php">
+           <form class="form-horizontal" role="form" method="post" action="">
             <div class="form-group">
               <label for="inputEmail3" class="col-sm-2 control-label">tên danh mục</label>
               <div class="col-sm-8">
@@ -68,7 +75,8 @@ edit<?php
             </div>
             <div class="form-group">
               <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" name="$EditCategory"  class="btn btn-success">lưu</button>
+                <button type="submit" name="edit_action"  class="btn btn-success">lưu</button>
+                <input type="hidden" name="id" value="<?php echo $id;?>">
               </div>
             </div>
           </form>
