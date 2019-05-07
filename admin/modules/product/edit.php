@@ -37,9 +37,9 @@
           
 
         }else{
-            $EditCategory = $db->fetchID("product",$id);
+            $EditProduct = $db->fetchID("product",$id);
            
-           if (empty($EditCategory)) {
+           if (empty($EditProduct)) {
                 $_SESSION['error']= "loi ";
                 redirectAdmin("product");
            }
@@ -68,7 +68,7 @@
             <div class="form-group">
               <label for="inputEmail3" class="col-sm-2 control-label">tên sản phẩm</label>
               <div class="col-sm-8">
-                <input type="text"  name="name" class="form-control" id="inputEmail3"  value="<?php echo $EditCategory['name'] ?>"/>
+                <input type="text"  name="name" class="form-control" id="inputEmail3"  value="<?php echo $EditProduct['name'] ?>"/>
                
               </div>
             </div>
@@ -76,7 +76,7 @@
             <div class="form-group">
               <label for="inputEmail3" class="col-sm-2 control-label"> giá sản phẩm</label>
               <div class="col-sm-8">
-                <input type="number"  name="price" class="form-control" id="inputEmail3" placeholder="9.999.999" value="<?php echo $EditCategory['price'] ?>"/>
+                <input type="number"  name="price" class="form-control" id="inputEmail3" placeholder="9.999.999" value="<?php echo $EditProduct['price'] ?>"/>
                
               
               </div>
@@ -85,14 +85,14 @@
              <div class="form-group">
               <label for="inputEmail3" class="col-sm-2 control-label"> giảm giá</label>
               <div class="col-sm-3">
-                <input type="number"  name="sele" class="form-control" id="inputEmail3" placeholder="10%" value="<?php echo $EditCategory['sele'] ?>"/>
+                <input type="number"  name="sele" class="form-control" id="inputEmail3" placeholder="10%" value="<?php echo $EditProduct['sele'] ?>"/>
               </div>
             </div>
 
                <div class="form-group">
               <label for="inputEmail3" class="col-sm-2 control-label"> số lượng</label>
               <div class="col-sm-3">
-                <input type="number" class="form-control" id="inputEmail3" name="number"  value="<?php echo $EditCategory['number'] ?>"/>
+                <input type="number" class="form-control" id="inputEmail3" name="number"  value="<?php echo $EditProduct['number'] ?>"/>
                   
               </div>
             </div>
@@ -100,7 +100,7 @@
              <div class="form-group">
               <label for="inputEmail3" class="col-sm-2 control-label">nội dung</label>
               <div class="col-sm-8">
-                <textarea type="text"  name="content" class="form-control" id="inputEmail3" value="<?php echo $EditCategory['content'] ?>" ></textarea>
+                <textarea type="text"  name="content" class="form-control" id="inputEmail3" value="<?php echo $EditProduct['content'] ?>" ></textarea>
                 
               </div>
             </div>
